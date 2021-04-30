@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lesson 3</title>
+</head>
+<body>
+    <div id="ajax-block"></div>
+    <button id="ajax-get">Async get data</button>
+<script>
+    // let userJson = '{"name": "Vasya", "age": 25, "isAdmin": true}';
+    // // console.log(userJson);
+    //
+    // let user = JSON.parse(userJson);
+    // // console.log(user);
+    // user.dateCreated = '2019-05-01';
+    // user.address = {
+    //     city: 'Moscow',
+    //     postalCode: 109400,
+    // };
+    //
+    // // console.log(user);
+    // // const updatedUserJson = JSON.stringify(user, ['dateCreated', 'address', 'city', 'postalCode', 'name', 'age', 'isAdmin'], 4);
+    // // const updatedUserJson = JSON.stringify(user, null, 4);
+    // const updatedUserJson = JSON.stringify(user);
+    // // console.log(updatedUserJson);
+    //
+    // let newUser = JSON.parse(updatedUserJson, (key, value) => {
+    //     if (key === 'dateCreated') value = new Date(value);
+    //     return value;
+    // });
+    //
+    // console.log(newUser);
+
+    // const num = () => {
+    //     let b;
+    //
+    //     setTimeout(() => {
+    //         b = 20;
+    //     }, 1500);
+    //
+    //     return b;
+    // };
+    // console.log(num());
+
+    // const num = (callBack) => { // callBack - принимаем любую функцию на входе
+    //     setTimeout(() => {
+    //         callBack(20);
+    //     }, 1500);
+    // };
+    // function callBack(data) {
+    //     console.log(data);
+    // }
+    // num((data) => { // data - параметр принимающий данные во время вызова callBack на 48 строке
+    //     console.log(data);
+    // })
+    // num(function (data) { // data - параметр принимающий данные во время вызова callBack на 48 строке
+    //     console.log(data);
+    // })
+    // num(callBack);
+    // num(console.log);
+
+    // let num = (a) => {
+    //     return new Promise((resolve, reject) => {
+    //         setTimeout(() => {
+    //             if (a) resolve(20 + a);
+    //             else reject('Error!')
+    //         }, 1500);
+    //     });
+    // }
+
+    // console.log(num());
+    // num(4)
+    //     .then((data) => { // функция описанная в блоке then попадает в параметр resolve
+    //         console.log(data);
+    //     })
+    //     .catch((error) => { // функция описанная в блоке catch попадает в параметр reject
+    //         console.log(error);
+    //     });
+    // num()
+    //     .then((data) => { // функция описанная в блоке then попадает в параметр resolve
+    //         return new Promise((resolve, reject) => {
+    //             setTimeout(() => {
+    //                 if (data) resolve(data + 50);
+    //                 else reject('Error!')
+    //             }, 1500);
+    //         });
+    //     })
+    //     .then((totalData) => {
+    //         console.log(totalData);
+    //     })
+    //     .catch((error) => { // функция описанная в блоке catch попадает в параметр reject
+    //         console.log(error);
+    //     });
+    // async function getNum() {
+    //     const total = await num();
+    //     console.log(total);
+    //
+    //     // const summary = Promise.all([foo(), foo2(), foo2()]);
+    //     // console.log(summary)
+    // }
+
+    // try {
+    //     getNum();
+    // } catch (e) {
+    //     console.log(e);
+    // }
+
+    document.querySelector('#ajax-get').addEventListener('click', () => {
+        // ES5
+        // var xhr = new XMLHttpRequest();
+        // xhr.open('GET', 'tel.json', true); // true - асинхронный запрос
+        //
+        // xhr.onreadystatechange = () => {
+        //     // xhr.readyState;
+        //     // 0 - запрос не инициализирован
+        //     // 1 - загрузка данных
+        //     // 2 - запрос принят сервером
+        //     // 3 - идет обмен данным
+        //     // 4 - запрос выполнен
+        //
+        //     if (xhr.readyState !== 4) return;
+        //
+        //     if (xhr.status !== 200) {
+        //         console.log(`Error! ${xhr.status} ${xhr.statusText}`);
+        //     } else {
+        //         // console.log(xhr.responseText);
+        //         const data = JSON.parse(xhr.responseText);
+        //         document
+        //             .querySelector('#ajax-block')
+        //             .insertAdjacentHTML('afterbegin', `<p>${data.name} - <strong>${data.tel}</strong></p>`);
+        //     }
+        // };
+        //
+        // xhr.send();
+
+        fetch('tel.json')
+            .then((response) => {
+                // console.log(response);
+                return response.json();
+            })
+            .then((data) => {
+                document
+                    .querySelector('#ajax-block')
+                    .insertAdjacentHTML('afterbegin', `<p>${data.name} - <strong>${data.tel}</strong></p>`);
+            })
+            .catch();
+    });
+</script>
+</body>
+</html>
