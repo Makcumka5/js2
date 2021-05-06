@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lesson 5</title>
+    <style>
+        .block {
+            width: 200px;
+            height: 200px;
+            background-color: #c0c0c0;
+        }
+
+        .red {
+            background-color: red;
+        }
+
+        .blue {
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+<!--    <h1>{{ title }}</h1>-->
+<!--    <h2>{{ sayHello() }}</h2>-->
+<!--&lt;!&ndash;    <a href="{{ link }}">Google</a>&ndash;&gt;-->
+<!--&lt;!&ndash;    <a v-bind:href="link">Google</a>&ndash;&gt;-->
+<!--    <a :href="link">Google</a>-->
+<!--&lt;!&ndash;    <div>{{ completeElement }}</div>&ndash;&gt;-->
+<!--    <div v-html="completeElement"></div>-->
+
+<!--&lt;!&ndash;    <button v-on:click="counter++">Increase</button>&ndash;&gt;-->
+<!--    <button @click="increase(2, $event)">Increase</button>-->
+<!--    <p>{{ counter }}</p>-->
+<!--    <p>{{ counter > 10 ? 'Greater than 10' : 'Less than 10' }}</p>-->
+<!--    <p @mousemove="getCoordinates($event)">-->
+<!--        Current position {{ x }} / {{ y }}-->
+<!--        <span @mousemove.stop>don't catch the coordinates</span>-->
+<!--    </p>-->
+<!--    <div>-->
+<!--        <button @click="counter++">Increase</button>-->
+<!--        <button @click="counter&#45;&#45;">Decrease</button>-->
+<!--        <button @click="secondCounter++">Increase second counter</button>-->
+<!--        <p>Counter: {{ counter }} | {{ secondCounter }}</p>-->
+<!--        <p>Result: {{ result() }} | {{ output }}</p>-->
+<!--    </div>-->
+<!--    <div class="block" :style="{backgroundColor: '#f00'}"></div>-->
+<!--    <div-->
+<!--            class="block"-->
+<!--            :class="{red: isRed, blue: !isRed}"-->
+<!--            @click="isRed=!isRed"-->
+<!--    ></div>-->
+<!--    <input type="text" v-model="width">-->
+<!--    <input type="text" v-model="color">-->
+<!--    <div class="block" :style="myStyle"></div>-->
+<!--    <h2 v-if="show">I'm visible</h2>-->
+<!--    <h2 v-else>Now I'm visible</h2>-->
+<!--    <button @click="show=!show">change</button>-->
+    <div class="products">
+        <div class="product" v-for="product of products" :key="product.id">
+            <img :src="product.img" alt="">
+            <div class="description">
+                <p>{{ product.title }}</p>
+                <p>{{ product.quantity }}</p>
+                <p>{{ product.quantity * product.price }} руб.</p>
+            </div>
+        </div>
+    </div>
+    <button @click="addProduct">Add product</button>
+    <button @click="products[1].quantity++">Change quantity</button>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            title: 'Hello!',
+            link: 'https://google.com',
+            completeElement: `<span>i'm new element <a href="https://google.com" id="link">google</a></span>`,
+            counter: 0,
+            secondCounter: 0,
+            x: 0,
+            y: 0,
+            isRed: true,
+            width: 100,
+            color: '#ccc',
+            show: true,
+            products: [
+                {id: 1, img: 'https://placehold.it/200x150', title: 'Notebook', price: 1000, quantity: 1},
+                {id: 2, img: 'https://placehold.it/200x150', title: 'Mouse', price: 100, quantity: 1},
+                {id: 3, img: 'https://placehold.it/200x150', title: 'Chair', price: 300, quantity: 1},
+            ],
+        },
+        methods: {
+            sayHello() {
+                // console.log('sayHello');
+                this.title = 'Changed';
+                return this.title;
+            },
+            increase(step, event) {
+                this.counter += step;
+                // console.log(event);
+            },
+            getCoordinates(event) {
+                this.x = event.clientX;
+                this.y = event.clientY;
+            },
+            result() {
+                console.log('method');
+                return this.counter > 5 ? 'Greater than 5' : 'Less than 5';
+            },
+            addProduct() {
+              this.products.push({id: 4, img: 'https://placehold.it/200x150', title: 'Super Chair', price: 500, quantity: 1});
+            },
+        },
+        computed: {
+            output() {
+                console.log('computed');
+                return this.counter > 5 ? 'Greater than 5' : 'Less than 5';
+            },
+            myStyle() {
+                return {
+                    backgroundColor: this.color,
+                    width: `${this.width}px`,
+                    height: `${this.width}px`,
+                };
+            },
+        }
+    });
+</script>
+</body>
+</html>
